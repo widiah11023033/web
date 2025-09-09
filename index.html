@@ -3,8 +3,1338 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Satu Nusa Holistic Therapy® - Mental Health and Addiction Treatment Rehab Bali</title>
-    <meta name="description" content="Satu Nusa Addiction Treatment and Mental Health in Bali, Indonesia. Holistic rehabilitation center on Serangan Island offering comprehensive recovery programs.">
+    <title>Satu Nusa CMS - Content Management System</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f1f1f1;
+            color: #23282d;
+        }
+
+        /* CMS Header */
+        .cms-header {
+            background: #23282d;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .cms-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #00a0d2;
+        }
+
+        .cms-nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        .cms-nav button {
+            background: transparent;
+            border: none;
+            color: white;
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .cms-nav button:hover,
+        .cms-nav button.active {
+            background: #0073aa;
+        }
+
+        /* Sidebar */
+        .cms-container {
+            display: flex;
+            margin-top: 60px;
+            min-height: calc(100vh - 60px);
+        }
+
+        .cms-sidebar {
+            width: 260px;
+            background: white;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            padding: 20px 0;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin: 0;
+        }
+
+        .sidebar-menu a {
+            display: block;
+            padding: 12px 20px;
+            color: #23282d;
+            text-decoration: none;
+            border-left: 4px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .sidebar-menu a:hover,
+        .sidebar-menu a.active {
+            background: #f9f9f9;
+            border-left-color: #0073aa;
+            color: #0073aa;
+        }
+
+        .sidebar-menu i {
+            width: 20px;
+            margin-right: 10px;
+        }
+
+        /* Main Content */
+        .cms-content {
+            flex: 1;
+            padding: 30px;
+            background: #f1f1f1;
+        }
+
+        .content-section {
+            display: none;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .content-header {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e1e1e1;
+        }
+
+        .content-header h2 {
+            color: #23282d;
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        .content-header p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #23282d;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #0073aa;
+            box-shadow: 0 0 0 3px rgba(0, 115, 170, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .btn-primary {
+            background: #0073aa;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #005a87;
+        }
+
+        .btn-success {
+            background: #46b450;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #3ba047;
+        }
+
+        .btn-secondary {
+            background: #666;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #555;
+        }
+
+        /* Image Upload */
+        .image-upload {
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .image-upload:hover {
+            border-color: #0073aa;
+            background: #f9f9f9;
+        }
+
+        .image-upload.dragover {
+            border-color: #0073aa;
+            background: #e6f3ff;
+        }
+
+        .image-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .preview-item {
+            position: relative;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .preview-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .preview-item .remove-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(255, 0, 0, 0.8);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Color Picker */
+        .color-picker {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .color-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .color-option.active {
+            border-color: #23282d;
+            transform: scale(1.1);
+        }
+
+        /* Website Preview */
+        .website-preview {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .preview-header {
+            background: #f9f9f9;
+            padding: 10px 15px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .preview-dots {
+            display: flex;
+            gap: 5px;
+        }
+
+        .preview-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ddd;
+        }
+
+        .preview-dot.red { background: #ff5f56; }
+        .preview-dot.yellow { background: #ffbd2e; }
+        .preview-dot.green { background: #27ca3f; }
+
+        .preview-content {
+            height: 400px;
+            background: white;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .cms-container {
+                flex-direction: column;
+            }
+            
+            .cms-sidebar {
+                width: 100%;
+                order: 2;
+            }
+            
+            .cms-content {
+                order: 1;
+                padding: 20px;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Success/Error Messages */
+        .alert {
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            border-left: 4px solid;
+        }
+
+        .alert-success {
+            background: #f0f9ff;
+            border-left-color: #46b450;
+            color: #155724;
+        }
+
+        .alert-error {
+            background: #fef2f2;
+            border-left-color: #dc2626;
+            color: #721c24;
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Website Content Styles */
+        .hero-preview {
+            background: linear-gradient(135deg, #2c5f41, #4CAF50);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .service-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .service-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .team-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .team-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .team-card img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- CMS Header -->
+    <div class="cms-header">
+        <div class="cms-logo">
+            <i class="fas fa-leaf"></i> Satu Nusa CMS
+        </div>
+        <div class="cms-nav">
+            <button onclick="previewWebsite()" class="btn-success">
+                <i class="fas fa-eye"></i> Preview Website
+            </button>
+            <button onclick="exportWebsite()" class="btn-primary">
+                <i class="fas fa-download"></i> Export HTML
+            </button>
+            <button onclick="showHelp()" class="btn-secondary">
+                <i class="fas fa-question-circle"></i> Help
+            </button>
+        </div>
+    </div>
+
+    <div class="cms-container">
+        <!-- Sidebar -->
+        <div class="cms-sidebar">
+            <ul class="sidebar-menu">
+                <li><a href="#" onclick="showSection('dashboard')" class="active" id="dashboard-link">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a></li>
+                <li><a href="#" onclick="showSection('hero')" id="hero-link">
+                    <i class="fas fa-home"></i> Hero Section
+                </a></li>
+                <li><a href="#" onclick="showSection('about')" id="about-link">
+                    <i class="fas fa-info-circle"></i> About Us
+                </a></li>
+                <li><a href="#" onclick="showSection('services')" id="services-link">
+                    <i class="fas fa-heart"></i> Services
+                </a></li>
+                <li><a href="#" onclick="showSection('team')" id="team-link">
+                    <i class="fas fa-users"></i> Team
+                </a></li>
+                <li><a href="#" onclick="showSection('gallery')" id="gallery-link">
+                    <i class="fas fa-images"></i> Gallery
+                </a></li>
+                <li><a href="#" onclick="showSection('contact')" id="contact-link">
+                    <i class="fas fa-envelope"></i> Contact
+                </a></li>
+                <li><a href="#" onclick="showSection('settings')" id="settings-link">
+                    <i class="fas fa-cog"></i> Settings
+                </a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="cms-content">
+            <!-- Dashboard -->
+            <div id="dashboard" class="content-section active">
+                <div class="content-header">
+                    <h2><i class="fas fa-tachometer-alt"></i> Dashboard</h2>
+                    <p>Kelola website Satu Nusa Rehabilitation dengan mudah</p>
+                </div>
+
+                <div class="alert alert-success">
+                    <strong>Selamat Datang!</strong> CMS Satu Nusa siap digunakan. Anda dapat mengubah konten, menambah foto, dan mengelola website dengan mudah.
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                    <div style="background: linear-gradient(45deg, #0073aa, #00a0d2); color: white; padding: 30px; border-radius: 8px; text-align: center;">
+                        <i class="fas fa-home" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                        <h3>Hero Section</h3>
+                        <p>Edit judul dan deskripsi utama</p>
+                    </div>
+                    <div style="background: linear-gradient(45deg, #46b450, #5cbf60); color: white; padding: 30px; border-radius: 8px; text-align: center;">
+                        <i class="fas fa-heart" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                        <h3>Services</h3>
+                        <p>Kelola layanan dan program</p>
+                    </div>
+                    <div style="background: linear-gradient(45deg, #f56565, #fc8181); color: white; padding: 30px; border-radius: 8px; text-align: center;">
+                        <i class="fas fa-users" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                        <h3>Team</h3>
+                        <p>Tambah dan edit profil tim</p>
+                    </div>
+                    <div style="background: linear-gradient(45deg, #9f7aea, #b794f6); color: white; padding: 30px; border-radius: 8px; text-align: center;">
+                        <i class="fas fa-images" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                        <h3>Gallery</h3>
+                        <p>Upload dan kelola foto</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Section -->
+            <div id="hero" class="content-section">
+                <div class="content-header">
+                    <h2><i class="fas fa-home"></i> Hero Section</h2>
+                    <p>Edit bagian utama website yang pertama dilihat pengunjung</p>
+                </div>
+
+                <form onsubmit="saveHeroContent(event)">
+                    <div class="form-group">
+                        <label for="hero-title">Judul Utama</label>
+                        <input type="text" id="hero-title" value="Your Journey, Our Compassion" placeholder="Masukkan judul utama...">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="hero-subtitle">Sub Judul</label>
+                        <input type="text" id="hero-subtitle" value="Rediscover Yourself in the Heart of Bali" placeholder="Masukkan sub judul...">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="hero-description">Deskripsi</label>
+                        <textarea id="hero-description" placeholder="Masukkan deskripsi lengkap...">Welcome to Satu Nusa Addiction Treatment and Mental Health, where true change begins. We are more than just a typical rehabilitation center; we are your destination for a healthier and happier life. Located on Serangan Island, South Denpasar, Bali, Indonesia, we blend the island's serene natural beauty and rich local culture with our signature Satu Nusa Holistic Therapy®</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="hero-button-text">Teks Tombol</label>
+                        <input type="text" id="hero-button-text" value="Start Your Recovery Journey" placeholder="Teks tombol CTA...">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Background Image</label>
+                        <div class="image-upload" onclick="document.getElementById('hero-bg').click()">
+                            <i class="fas fa-cloud-upload-alt" style="font-size: 2rem; color: #0073aa; margin-bottom: 10px;"></i>
+                            <p>Klik atau drag & drop gambar background hero</p>
+                            <input type="file" id="hero-bg" accept="image/*" style="display: none;" onchange="previewHeroBackground(this)">
+                        </div>
+                        <div id="hero-bg-preview"></div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Simpan Hero Section
+                    </button>
+                </form>
+
+                <div class="website-preview">
+                    <div class="preview-header">
+                        <div class="preview-dots">
+                            <div class="preview-dot red"></div>
+                            <div class="preview-dot yellow"></div>
+                            <div class="preview-dot green"></div>
+                        </div>
+                        <span style="margin-left: 10px; color: #666;">Preview Hero Section</span>
+                    </div>
+                    <div class="preview-content">
+                        <div id="hero-preview" class="hero-preview">
+                            <h1 id="preview-hero-title">Your Journey, Our Compassion</h1>
+                            <h2 id="preview-hero-subtitle" style="font-weight: 300; margin: 10px 0;">Rediscover Yourself in the Heart of Bali</h2>
+                            <p id="preview-hero-description" style="margin: 20px 0;">Welcome to Satu Nusa Addiction Treatment and Mental Health...</p>
+                            <button id="preview-hero-button" style="background: white; color: #2c5f41; padding: 10px 20px; border: none; border-radius: 25px; font-weight: bold;">Start Your Recovery Journey</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- About Section -->
+            <div id="about" class="content-section">
+                <div class="content-header">
+                    <h2><i class="fas fa-info-circle"></i> About Us</h2>
+                    <p>Edit informasi tentang Satu Nusa dan keunikan layanan</p>
+                </div>
+
+                <form onsubmit="saveAboutContent(event)">
+                    <div class="form-group">
+                        <label for="about-title">Judul Section</label>
+                        <input type="text" id="about-title" value="What Makes Us Different?" placeholder="Judul section about...">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="about-description">Deskripsi Utama</label>
+                        <textarea id="about-description" placeholder="Deskripsi tentang keunikan Satu Nusa...">We recognize that each recovery journey is unique. That is why we provide Satu Nusa Holistic Therapy®, a program designed to emphasize mindset and behavioral transformation in order to achieve the Eight Pillars of Holistic Well-being, addressing both addiction and mental health challenges.</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="about-description2">Deskripsi Tambahan</label>
+                        <textarea id="about-description2" placeholder="Deskripsi tambahan...">Our comprehensive approach combines traditional therapeutic methods with innovative holistic practices, set against the backdrop of Bali's healing natural environment. We understand that true recovery encompasses mind, body, and spirit.</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Gambar About Section</label>
+                        <div class="image-upload" onclick="document.getElementById('about-image').click()">
+                            <i class="fas fa-images" style="font-size: 2rem; color: #0073aa; margin-bottom: 10px;"></i>
+                            <p>Upload gambar untuk section about</p>
+                            <input type="file" id="about-image" accept="image/*" style="display: none;" onchange="previewAboutImage(this)">
+                        </div>
+                        <div id="about-image-preview"></div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Simpan About Section
+                    </button>
+                </form>
+            </div>
+
+            <!-- Services Section -->
+            <div id="services" class="content-section">
+                <div class="content-header">
+                    <h2><i class="fas fa-heart"></i> Services</h2>
+                    <p>Kelola layanan dan program yang ditawarkan</p>
+                </div>
+
+                <div class="form-group">
+                    <button type="button" class="btn btn-success" onclick="addService()">
+                        <i class="fas fa-plus"></i> Tambah Layanan Baru
+                    </button>
+                </div>
+
+                <div id="services-list">
+                    <!-- Services will be populated by JavaScript -->
+                </div>
+
+                <button type="button" class="btn btn-primary" onclick="saveServices()">
+                    <i class="fas fa-save"></i> Simpan Semua Layanan
+                </button>
+            </div>
+
+            <!-- Team Section -->
+            <div id="team" class="content-section">
+                <div class="content-header">
+                    <h2><i class="fas fa-users"></i> Team</h2>
+                    <p>Kelola profil tim dan staff</p>
+                </div>
+
+                <div class="form-group">
+                    <button type="button" class="btn btn-success" onclick="addTeamMember()">
+                        <i class="fas fa-user-plus"></i> Tambah Anggota Tim
+                    </button>
+                </div>
+
+                <div id="team-list">
+                    <!-- Team members will be populated by JavaScript -->
+                </div>
+
+                <button type="button" class="btn btn-primary" onclick="saveTeam()">
+                    <i class="fas fa-save"></i> Simpan Team
+                </button>
+            </div>
+
+            <!-- Gallery Section -->
+            <div id="gallery" class="content-section">
+                <div class="content-header">
+                    <h2><i class="fas fa-images"></i> Gallery</h2>
+                    <p>Upload dan kelola foto-foto fasilitas</p>
+                </div>
+
+                <div class="form-group">
+                    <label>Upload Foto Gallery</label>
+                    <div class="image-upload" onclick="document.getElementById('gallery-images').click()">
+                        <i class="fas fa-cloud-upload-alt" style="font-size: 2rem; color: #0073aa; margin-bottom: 10px;"></i>
+                        <p>Klik atau drag & drop untuk upload multiple foto</p>
+                        <input type="file" id="gallery-images" accept="image/*" multiple style="display: none;" onchange="previewGalleryImages(this)">
+                    </div>
+                </div>
+
+                <div id="gallery-preview" class="image-preview">
+                    <!-- Gallery images will be shown here -->
+                </div>
+
+                <button type="button" class="btn btn-primary" onclick="saveGallery()">
+                    <i class="fas fa-save"></i> Simpan Gallery
+                </button>
+            </div>
+
+            <!-- Contact Section -->
+            <div id="contact" class="content-section">
+                <div class="content-header">
+                    <h2><i class="fas fa-envelope"></i> Contact</h2>
+                    <p>Edit informasi kontak dan lokasi</p>
+                </div>
+
+                <form onsubmit="saveContactInfo(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="contact-phone">Nomor Telepon</label>
+                            <input type="text" id="contact-phone" placeholder="+62 xxx-xxxx-xxxx">
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-email">Email</label>
+                            <input type="email" id="contact-email" placeholder="info@satunusarehabilitation.com">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contact-address">Alamat</label>
+                        <textarea id="contact-address" placeholder="Alamat lengkap...">Serangan Island, South Denpasar, Bali, Indonesia</textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="contact-whatsapp">WhatsApp</label>
+                            <input type="text" id="contact-whatsapp" placeholder="+62 xxx-xxxx-xxxx">
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-website">Website</label>
+                            <input type="url" id="contact-website" value="https://satunusarehabilitation.com">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Simpan Kontak
+                    </button>
+                </form>
+            </div>
+
+            <!-- Settings -->
+            <div id="settings" class="content-section">
+                <div class="content-header">
+                    <h2><i class="fas fa-cog"></i> Settings</h2>
+                    <p>Pengaturan umum website</p>
+                </div>
+
+                <form onsubmit="saveSettings(event)">
+                    <div class="form-group">
+                        <label for="site-title">Judul Website</label>
+                        <input type="text" id="site-title" value="Satu Nusa Holistic Therapy® - Mental Health and Addiction Treatment Rehab Bali">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="site-description">Deskripsi Meta</label>
+                        <textarea id="site-description" placeholder="Deskripsi website untuk SEO...">Satu Nusa Addiction Treatment and Mental Health in Bali, Indonesia. Holistic rehabilitation center on Serangan Island offering comprehensive recovery programs.</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Logo Website</label>
+                        <div class="image-upload" onclick="document.getElementById('site-logo').click()">
+                            <i class="fas fa-upload" style="font-size: 2rem; color: #0073aa; margin-bottom: 10px;"></i>
+                            <p>Upload logo website</p>
+                            <input type="file" id="site-logo" accept="image/*" style="display: none;" onchange="previewSiteLogo(this)">
+                        </div>
+                        <div id="logo-preview"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Warna Tema</label>
+                        <div class="color-picker">
+                            <div class="color-option active" style="background: #2c5f41;" onclick="selectColor('#2c5f41')" data-color="#2c5f41"></div>
+                            <div class="color-option" style="background: #4CAF50;" onclick="selectColor('#4CAF50')" data-color="#4CAF50"></div>
+                            <div class="color-option" style="background: #0073aa;" onclick="selectColor('#0073aa')" data-color="#0073aa"></div>
+                            <div class="color-option" style="background: #e91e63;" onclick="selectColor('#e91e63')" data-color="#e91e63"></div>
+                            <div class="color-option" style="background: #ff9800;" onclick="selectColor('#ff9800')" data-color="#ff9800"></div>
+                            <div class="color-option" style="background: #9c27b0;" onclick="selectColor('#9c27b0')" data-color="#9c27b0"></div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Simpan Pengaturan
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables to store website data
+        let websiteData = {
+            hero: {
+                title: "Your Journey, Our Compassion",
+                subtitle: "Rediscover Yourself in the Heart of Bali",
+                description: "Welcome to Satu Nusa Addiction Treatment and Mental Health, where true change begins. We are more than just a typical rehabilitation center; we are your destination for a healthier and happier life. Located on Serangan Island, South Denpasar, Bali, Indonesia, we blend the island's serene natural beauty and rich local culture with our signature Satu Nusa Holistic Therapy®",
+                buttonText: "Start Your Recovery Journey",
+                backgroundImage: ""
+            },
+            about: {
+                title: "What Makes Us Different?",
+                description: "We recognize that each recovery journey is unique. That is why we provide Satu Nusa Holistic Therapy®, a program designed to emphasize mindset and behavioral transformation in order to achieve the Eight Pillars of Holistic Well-being, addressing both addiction and mental health challenges.",
+                description2: "Our comprehensive approach combines traditional therapeutic methods with innovative holistic practices, set against the backdrop of Bali's healing natural environment. We understand that true recovery encompasses mind, body, and spirit.",
+                image: ""
+            },
+            services: [
+                {
+                    title: "Mental Health",
+                    icon: "fas fa-brain",
+                    description: "Mental health is a state of mental well-being that enables people to cope with the stresses of life, realize their abilities, learn well and work well, and contribute to their community. Our comprehensive mental health programs address anxiety, depression, trauma, and other psychological challenges through evidence-based therapeutic approaches."
+                },
+                {
+                    title: "Addiction Treatment",
+                    icon: "fas fa-heart",
+                    description: "Addiction treatment is a critical and multifaceted process aimed at helping individuals overcome their dependence on substances or behaviors that have become detrimental to their well-being. Our program combines medical supervision, counseling, and holistic approaches to ensure lasting recovery."
+                },
+                {
+                    title: "Satu Nusa Holistic Therapy®",
+                    icon: "fas fa-lotus",
+                    description: "Satu Nusa Holistic Therapy is a comprehensive rehabilitation approach that integrates traditional therapeutic methods with innovative holistic practices. Our signature program focuses on the Eight Pillars of Holistic Well-being to address the whole person - mind, body, and spirit."
+                }
+            ],
+            team: [
+                {
+                    name: "Kerryn",
+                    role: "Hypnotherapist & RTT Practitioner",
+                    description: "Kerryn has been practicing RTT (Rapid Transformational Therapy) for 6 years and has helped hundreds of people with a wide range of issues. She is exceptionally skilled at what she does and has been trained by the best in the field.",
+                    image: "https://i0.wp.com/satunusarehabilitation.com/wp-content/uploads/2023/05/8-22OCT_BHR_6of31__3_-removebg-preview.png?resize=257%2C330&ssl=1"
+                }
+            ],
+            gallery: [],
+            contact: {
+                phone: "",
+                email: "",
+                address: "Serangan Island, South Denpasar, Bali, Indonesia",
+                whatsapp: "",
+                website: "https://satunusarehabilitation.com"
+            },
+            settings: {
+                siteTitle: "Satu Nusa Holistic Therapy® - Mental Health and Addiction Treatment Rehab Bali",
+                siteDescription: "Satu Nusa Addiction Treatment and Mental Health in Bali, Indonesia. Holistic rehabilitation center on Serangan Island offering comprehensive recovery programs.",
+                logo: "",
+                primaryColor: "#2c5f41"
+            }
+        };
+
+        // Initialize CMS
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeServices();
+            initializeTeam();
+            updateHeroPreview();
+            
+            // Setup drag and drop for image uploads
+            setupDragAndDrop();
+        });
+
+        // Navigation functions
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all links
+            document.querySelectorAll('.sidebar-menu a').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            document.getElementById(sectionId + '-link').classList.add('active');
+        }
+
+        // Hero Section Functions
+        function saveHeroContent(event) {
+            event.preventDefault();
+            
+            websiteData.hero.title = document.getElementById('hero-title').value;
+            websiteData.hero.subtitle = document.getElementById('hero-subtitle').value;
+            websiteData.hero.description = document.getElementById('hero-description').value;
+            websiteData.hero.buttonText = document.getElementById('hero-button-text').value;
+            
+            updateHeroPreview();
+            showSuccessMessage('Hero section berhasil disimpan!');
+        }
+
+        function updateHeroPreview() {
+            document.getElementById('preview-hero-title').textContent = websiteData.hero.title;
+            document.getElementById('preview-hero-subtitle').textContent = websiteData.hero.subtitle;
+            document.getElementById('preview-hero-description').textContent = websiteData.hero.description.substring(0, 100) + '...';
+            document.getElementById('preview-hero-button').textContent = websiteData.hero.buttonText;
+        }
+
+        function previewHeroBackground(input) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    websiteData.hero.backgroundImage = e.target.result;
+                    const preview = document.getElementById('hero-bg-preview');
+                    preview.innerHTML = `<div class="preview-item" style="margin-top: 20px;">
+                        <img src="${e.target.result}" alt="Hero Background">
+                        <button class="remove-btn" onclick="removeHeroBackground()">&times;</button>
+                    </div>`;
+                    
+                    // Update preview background
+                    document.getElementById('hero-preview').style.backgroundImage = `linear-gradient(135deg, rgba(44, 95, 65, 0.7), rgba(76, 175, 80, 0.5)), url(${e.target.result})`;
+                    document.getElementById('hero-preview').style.backgroundSize = 'cover';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function removeHeroBackground() {
+            websiteData.hero.backgroundImage = "";
+            document.getElementById('hero-bg-preview').innerHTML = "";
+            document.getElementById('hero-preview').style.backgroundImage = "linear-gradient(135deg, #2c5f41, #4CAF50)";
+        }
+
+        // About Section Functions
+        function saveAboutContent(event) {
+            event.preventDefault();
+            
+            websiteData.about.title = document.getElementById('about-title').value;
+            websiteData.about.description = document.getElementById('about-description').value;
+            websiteData.about.description2 = document.getElementById('about-description2').value;
+            
+            showSuccessMessage('About section berhasil disimpan!');
+        }
+
+        function previewAboutImage(input) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    websiteData.about.image = e.target.result;
+                    const preview = document.getElementById('about-image-preview');
+                    preview.innerHTML = `<div class="preview-item" style="margin-top: 20px;">
+                        <img src="${e.target.result}" alt="About Image">
+                        <button class="remove-btn" onclick="removeAboutImage()">&times;</button>
+                    </div>`;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function removeAboutImage() {
+            websiteData.about.image = "";
+            document.getElementById('about-image-preview').innerHTML = "";
+        }
+
+        // Services Functions
+        function initializeServices() {
+            const servicesList = document.getElementById('services-list');
+            servicesList.innerHTML = '';
+            
+            websiteData.services.forEach((service, index) => {
+                addServiceToDOM(service, index);
+            });
+        }
+
+        function addService() {
+            const newService = {
+                title: "New Service",
+                icon: "fas fa-plus",
+                description: "Service description..."
+            };
+            
+            websiteData.services.push(newService);
+            addServiceToDOM(newService, websiteData.services.length - 1);
+        }
+
+        function addServiceToDOM(service, index) {
+            const servicesList = document.getElementById('services-list');
+            const serviceDiv = document.createElement('div');
+            serviceDiv.style.cssText = 'background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #ddd;';
+            
+            serviceDiv.innerHTML = `
+                <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 15px;">
+                    <h3 style="margin: 0; color: #23282d;">Service ${index + 1}</h3>
+                    <button type="button" onclick="removeService(${index})" style="background: #dc2626; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">
+                        <i class="fas fa-trash"></i> Hapus
+                    </button>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Nama Layanan</label>
+                        <input type="text" value="${service.title}" onchange="updateService(${index}, 'title', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label>Icon (Font Awesome Class)</label>
+                        <input type="text" value="${service.icon}" onchange="updateService(${index}, 'icon', this.value)" placeholder="Contoh: fas fa-heart">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Deskripsi Layanan</label>
+                    <textarea onchange="updateService(${index}, 'description', this.value)">${service.description}</textarea>
+                </div>
+            `;
+            
+            servicesList.appendChild(serviceDiv);
+        }
+
+        function updateService(index, field, value) {
+            websiteData.services[index][field] = value;
+        }
+
+        function removeService(index) {
+            websiteData.services.splice(index, 1);
+            initializeServices();
+        }
+
+        function saveServices() {
+            showSuccessMessage('Semua layanan berhasil disimpan!');
+        }
+
+        // Team Functions
+        function initializeTeam() {
+            const teamList = document.getElementById('team-list');
+            teamList.innerHTML = '';
+            
+            websiteData.team.forEach((member, index) => {
+                addTeamMemberToDOM(member, index);
+            });
+        }
+
+        function addTeamMember() {
+            const newMember = {
+                name: "Nama Baru",
+                role: "Posisi",
+                description: "Deskripsi anggota tim...",
+                image: ""
+            };
+            
+            websiteData.team.push(newMember);
+            addTeamMemberToDOM(newMember, websiteData.team.length - 1);
+        }
+
+        function addTeamMemberToDOM(member, index) {
+            const teamList = document.getElementById('team-list');
+            const memberDiv = document.createElement('div');
+            memberDiv.style.cssText = 'background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #ddd;';
+            
+            memberDiv.innerHTML = `
+                <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 15px;">
+                    <h3 style="margin: 0; color: #23282d;">${member.name}</h3>
+                    <button type="button" onclick="removeTeamMember(${index})" style="background: #dc2626; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">
+                        <i class="fas fa-trash"></i> Hapus
+                    </button>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Nama</label>
+                        <input type="text" value="${member.name}" onchange="updateTeamMember(${index}, 'name', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label>Posisi/Role</label>
+                        <input type="text" value="${member.role}" onchange="updateTeamMember(${index}, 'role', this.value)">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Deskripsi</label>
+                    <textarea onchange="updateTeamMember(${index}, 'description', this.value)">${member.description}</textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Foto</label>
+                    <div class="image-upload" onclick="document.getElementById('team-image-${index}').click()">
+                        <i class="fas fa-user" style="font-size: 2rem; color: #0073aa; margin-bottom: 10px;"></i>
+                        <p>Upload foto ${member.name}</p>
+                        <input type="file" id="team-image-${index}" accept="image/*" style="display: none;" onchange="previewTeamImage(this, ${index})">
+                    </div>
+                    <div id="team-image-preview-${index}">
+                        ${member.image ? `<div class="preview-item" style="margin-top: 20px;">
+                            <img src="${member.image}" alt="${member.name}">
+                            <button class="remove-btn" onclick="removeTeamImage(${index})">&times;</button>
+                        </div>` : ''}
+                    </div>
+                </div>
+            `;
+            
+            teamList.appendChild(memberDiv);
+        }
+
+        function updateTeamMember(index, field, value) {
+            websiteData.team[index][field] = value;
+            if (field === 'name') {
+                initializeTeam(); // Refresh to update header
+            }
+        }
+
+        function removeTeamMember(index) {
+            websiteData.team.splice(index, 1);
+            initializeTeam();
+        }
+
+        function previewTeamImage(input, index) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    websiteData.team[index].image = e.target.result;
+                    const preview = document.getElementById(`team-image-preview-${index}`);
+                    preview.innerHTML = `<div class="preview-item" style="margin-top: 20px;">
+                        <img src="${e.target.result}" alt="${websiteData.team[index].name}">
+                        <button class="remove-btn" onclick="removeTeamImage(${index})">&times;</button>
+                    </div>`;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function removeTeamImage(index) {
+            websiteData.team[index].image = "";
+            document.getElementById(`team-image-preview-${index}`).innerHTML = "";
+        }
+
+        function saveTeam() {
+            showSuccessMessage('Data tim berhasil disimpan!');
+        }
+
+        // Gallery Functions
+        function previewGalleryImages(input) {
+            const files = Array.from(input.files);
+            const preview = document.getElementById('gallery-preview');
+            
+            files.forEach((file, index) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const galleryItem = {
+                        src: e.target.result,
+                        title: file.name,
+                        description: "Deskripsi gambar..."
+                    };
+                    
+                    websiteData.gallery.push(galleryItem);
+                    
+                    const previewItem = document.createElement('div');
+                    previewItem.className = 'preview-item';
+                    previewItem.innerHTML = `
+                        <img src="${e.target.result}" alt="${file.name}">
+                        <button class="remove-btn" onclick="removeGalleryImage(${websiteData.gallery.length - 1})">&times;</button>
+                        <div style="padding: 10px;">
+                            <input type="text" value="${file.name}" onchange="updateGalleryTitle(${websiteData.gallery.length - 1}, this.value)" placeholder="Judul gambar..." style="width: 100%; margin-bottom: 5px; padding: 5px; border: 1px solid #ddd; border-radius: 4px;">
+                            <textarea onchange="updateGalleryDescription(${websiteData.gallery.length - 1}, this.value)" placeholder="Deskripsi..." style="width: 100%; height: 60px; padding: 5px; border: 1px solid #ddd; border-radius: 4px; resize: none;">${galleryItem.description}</textarea>
+                        </div>
+                    `;
+                    preview.appendChild(previewItem);
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function removeGalleryImage(index) {
+            websiteData.gallery.splice(index, 1);
+            refreshGalleryPreview();
+        }
+
+        function updateGalleryTitle(index, value) {
+            websiteData.gallery[index].title = value;
+        }
+
+        function updateGalleryDescription(index, value) {
+            websiteData.gallery[index].description = value;
+        }
+
+        function refreshGalleryPreview() {
+            const preview = document.getElementById('gallery-preview');
+            preview.innerHTML = '';
+            
+            websiteData.gallery.forEach((item, index) => {
+                const previewItem = document.createElement('div');
+                previewItem.className = 'preview-item';
+                previewItem.innerHTML = `
+                    <img src="${item.src}" alt="${item.title}">
+                    <button class="remove-btn" onclick="removeGalleryImage(${index})">&times;</button>
+                    <div style="padding: 10px;">
+                        <input type="text" value="${item.title}" onchange="updateGalleryTitle(${index}, this.value)" placeholder="Judul gambar..." style="width: 100%; margin-bottom: 5px; padding: 5px; border: 1px solid #ddd; border-radius: 4px;">
+                        <textarea onchange="updateGalleryDescription(${index}, this.value)" placeholder="Deskripsi..." style="width: 100%; height: 60px; padding: 5px; border: 1px solid #ddd; border-radius: 4px; resize: none;">${item.description}</textarea>
+                    </div>
+                `;
+                preview.appendChild(previewItem);
+            });
+        }
+
+        function saveGallery() {
+            showSuccessMessage('Gallery berhasil disimpan!');
+        }
+
+        // Contact Functions
+        function saveContactInfo(event) {
+            event.preventDefault();
+            
+            websiteData.contact.phone = document.getElementById('contact-phone').value;
+            websiteData.contact.email = document.getElementById('contact-email').value;
+            websiteData.contact.address = document.getElementById('contact-address').value;
+            websiteData.contact.whatsapp = document.getElementById('contact-whatsapp').value;
+            websiteData.contact.website = document.getElementById('contact-website').value;
+            
+            showSuccessMessage('Informasi kontak berhasil disimpan!');
+        }
+
+        // Settings Functions
+        function saveSettings(event) {
+            event.preventDefault();
+            
+            websiteData.settings.siteTitle = document.getElementById('site-title').value;
+            websiteData.settings.siteDescription = document.getElementById('site-description').value;
+            
+            showSuccessMessage('Pengaturan berhasil disimpan!');
+        }
+
+        function previewSiteLogo(input) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    websiteData.settings.logo = e.target.result;
+                    const preview = document.getElementById('logo-preview');
+                    preview.innerHTML = `<div class="preview-item" style="margin-top: 20px;">
+                        <img src="${e.target.result}" alt="Site Logo" style="height: 100px; width: auto;">
+                        <button class="remove-btn" onclick="removeSiteLogo()">&times;</button>
+                    </div>`;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function removeSiteLogo() {
+            websiteData.settings.logo = "";
+            document.getElementById('logo-preview').innerHTML = "";
+        }
+
+        function selectColor(color) {
+            websiteData.settings.primaryColor = color;
+            
+            // Update active color
+            document.querySelectorAll('.color-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        // Utility Functions
+        function showSuccessMessage(message) {
+            const alert = document.createElement('div');
+            alert.className = 'alert alert-success';
+            alert.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+            
+            const content = document.querySelector('.content-section.active');
+            content.insertBefore(alert, content.firstChild);
+            
+            setTimeout(() => {
+                alert.remove();
+            }, 3000);
+        }
+
+        function showErrorMessage(message) {
+            const alert = document.createElement('div');
+            alert.className = 'alert alert-error';
+            alert.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
+            
+            const content = document.querySelector('.content-section.active');
+            content.insertBefore(alert, content.firstChild);
+            
+            setTimeout(() => {
+                alert.remove();
+            }, 3000);
+        }
+
+        // Drag and Drop Setup
+        function setupDragAndDrop() {
+            const uploadAreas = document.querySelectorAll('.image-upload');
+            
+            uploadAreas.forEach(area => {
+                area.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    area.classList.add('dragover');
+                });
+                
+                area.addEventListener('dragleave', () => {
+                    area.classList.remove('dragover');
+                });
+                
+                area.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    area.classList.remove('dragover');
+                    
+                    const files = e.dataTransfer.files;
+                    if (files.length > 0) {
+                        const input = area.querySelector('input[type="file"]');
+                        input.files = files;
+                        input.dispatchEvent(new Event('change'));
+                    }
+                });
+            });
+        }
+
+        // Export Functions
+        function previewWebsite() {
+            const websiteHTML = generateWebsiteHTML();
+            const newWindow = window.open('', '_blank');
+            newWindow.document.write(websiteHTML);
+            newWindow.document.close();
+        }
+
+        function exportWebsite() {
+            const websiteHTML = generateWebsiteHTML();
+            const blob = new Blob([websiteHTML], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'satu-nusa-website.html';
+            a.click();
+            
+            URL.revokeObjectURL(url);
+            showSuccessMessage('Website berhasil diexport sebagai HTML file!');
+        }
+
+        function generateWebsiteHTML() {
+            return `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${websiteData.settings.siteTitle}</title>
+    <meta name="description" content="${websiteData.settings.siteDescription}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         * {
@@ -42,10 +1372,20 @@
         }
 
         .logo {
+            display: flex;
+            align-items: center;
             font-size: 1.8rem;
             font-weight: bold;
-            color: #2c5f41;
+            color: ${websiteData.settings.primaryColor};
             text-decoration: none;
+        }
+
+        .logo img {
+            width: 50px;
+            height: 50px;
+            margin-right: 12px;
+            border-radius: 8px;
+            object-fit: cover;
         }
 
         .nav-links {
@@ -63,43 +1403,13 @@
         }
 
         .nav-links a:hover {
-            color: #2c5f41;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: #2c5f41;
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-        }
-
-        .menu-toggle span {
-            width: 25px;
-            height: 3px;
-            background: #333;
-            margin: 3px 0;
-            transition: 0.3s;
+            color: ${websiteData.settings.primaryColor};
         }
 
         /* Hero Section */
         .hero {
             height: 100vh;
-            background: linear-gradient(135deg, rgba(44, 95, 65, 0.8), rgba(76, 175, 80, 0.6)), 
-                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%234CAF50;stop-opacity:0.3" /><stop offset="100%" style="stop-color:%232c5f41;stop-opacity:0.5" /></linearGradient></defs><rect width="1200" height="800" fill="url(%23grad1)"/><circle cx="200" cy="200" r="100" fill="white" opacity="0.1"/><circle cx="800" cy="400" r="150" fill="white" opacity="0.08"/><circle cx="1000" cy="150" r="80" fill="white" opacity="0.12"/></svg>');
+            background: linear-gradient(135deg, rgba(44, 95, 65, 0.7), rgba(76, 175, 80, 0.5))${websiteData.hero.backgroundImage ? `, url(${websiteData.hero.backgroundImage})` : ''};
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -111,23 +1421,11 @@
             position: relative;
         }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, rgba(44, 95, 65, 0.7), rgba(76, 175, 80, 0.5));
-            z-index: 1;
-        }
-
         .hero-content {
             position: relative;
             z-index: 2;
             max-width: 800px;
             padding: 0 2rem;
-            animation: fadeInUp 1s ease;
         }
 
         .hero h1 {
@@ -162,7 +1460,6 @@
             font-size: 1.1rem;
             transition: all 0.3s ease;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            transform: translateY(0);
         }
 
         .cta-button:hover {
@@ -181,7 +1478,7 @@
         .section-title {
             text-align: center;
             font-size: 2.5rem;
-            color: #2c5f41;
+            color: ${websiteData.settings.primaryColor};
             margin-bottom: 3rem;
             position: relative;
         }
@@ -198,70 +1495,7 @@
             border-radius: 2px;
         }
 
-        .what-makes-different {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            position: relative;
-        }
-
-        .what-makes-different::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 100px;
-            background: linear-gradient(to bottom, rgba(76, 175, 80, 0.1), transparent);
-        }
-
-        .content-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .content-text {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #555;
-        }
-
-        .highlight-text {
-            color: #2c5f41;
-            font-weight: 600;
-        }
-
-        .image-placeholder {
-            width: 100%;
-            height: 400px;
-            background: linear-gradient(135deg, #4CAF50, #66BB6A);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .image-placeholder::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            animation: shimmer 2s infinite;
-        }
-
-        /* Services Section */
-        .services {
-            background: white;
-        }
-
+        /* Services */
         .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -277,18 +1511,6 @@
             text-align: center;
             transition: all 0.3s ease;
             border: 1px solid rgba(76, 175, 80, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(45deg, #4CAF50, #66BB6A);
         }
 
         .service-card:hover {
@@ -304,461 +1526,191 @@
 
         .service-card h3 {
             font-size: 1.5rem;
-            color: #2c5f41;
+            color: ${websiteData.settings.primaryColor};
             margin-bottom: 1rem;
         }
 
-        .service-card p {
-            color: #666;
-            line-height: 1.6;
-        }
-
-        /* Recreation Therapy Section */
-        .recreation-therapy {
-            background: linear-gradient(135deg, rgba(76, 175, 80, 0.05), rgba(44, 95, 65, 0.05));
-        }
-
-        .activities-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin: 3rem 0;
-        }
-
-        .activity-item {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 15px;
-            border-left: 4px solid #4CAF50;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-        }
-
-        .activity-item:hover {
-            transform: translateX(5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
-        }
-
-        .activity-item h4 {
-            color: #2c5f41;
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
-        }
-
-        .benefits-grid {
+        /* Team Section */
+        .team-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
             margin-top: 3rem;
         }
 
-        .benefit-card {
+        .team-card {
             background: white;
             padding: 2rem;
             border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
         }
 
-        .benefit-card:hover {
+        .team-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
         }
 
-        .benefit-card h4 {
-            color: #2c5f41;
+        .team-card img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
             margin-bottom: 1rem;
-            font-size: 1.2rem;
+        }
+
+        .team-card h3 {
+            color: ${websiteData.settings.primaryColor};
+            margin-bottom: 0.5rem;
+        }
+
+        .team-role {
+            color: #4CAF50;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        /* Gallery */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            height: 250px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         /* Footer */
         footer {
-            background: linear-gradient(135deg, #2c5f41, #1e3f2c);
+            background: linear-gradient(135deg, ${websiteData.settings.primaryColor}, #1e3f2c);
             color: white;
             padding: 3rem 5%;
             text-align: center;
         }
 
-        .footer-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .footer-section h3 {
-            margin-bottom: 1rem;
-            color: #66BB6A;
-        }
-
-        .footer-section p, .footer-section a {
-            color: rgba(255,255,255,0.8);
-            text-decoration: none;
-            line-height: 1.6;
-        }
-
-        .footer-section a:hover {
-            color: #66BB6A;
-        }
-
-        .footer-bottom {
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255,255,255,0.2);
-            text-align: center;
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes shimmer {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        /* Responsive Design */
         @media (max-width: 768px) {
-            .nav-links {
-                position: fixed;
-                top: 70px;
-                right: -100%;
-                width: 100%;
-                height: calc(100vh - 70px);
-                background: white;
-                flex-direction: column;
-                justify-content: start;
-                align-items: center;
-                padding-top: 2rem;
-                transition: right 0.3s ease;
-                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            }
-
-            .nav-links.active {
-                right: 0;
-            }
-
-            .menu-toggle {
-                display: flex;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero h2 {
-                font-size: 1.4rem;
-            }
-
-            .content-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .section {
-                padding: 60px 5%;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero h2 {
-                font-size: 1.2rem;
-            }
-
-            .cta-button {
-                padding: 12px 30px;
-                font-size: 1rem;
-            }
+            .hero h1 { font-size: 2.5rem; }
+            .nav-links { display: none; }
+            .services-grid, .team-grid, .gallery-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header>
         <nav>
-            <a href="#" class="logo">Sayap Tumbuh Nusantara</a>
+            <a href="#" class="logo">
+                ${websiteData.settings.logo ? `<img src="${websiteData.settings.logo}" alt="Logo">` : '<i class="fas fa-leaf"></i>'}
+                Satu Nusa
+            </a>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#therapy">Recreation Therapy</a></li>
                 <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#team">Team</a></li>
+                <li><a href="#gallery">Gallery</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
-            <div class="menu-toggle" onclick="toggleMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
         </nav>
     </header>
 
-    <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="hero-content">
-            <h1>Your Journey, Our Compassion</h1>
-            <h2>Rediscover Yourself in the Heart of Bali</h2>
-            <p>Welcome to Satu Nusa Addiction Treatment and Mental Health, where true change begins. We are more than just a typical rehabilitation center; we are your destination for a healthier and happier life. Located on Serangan Island, South Denpasar, Bali, Indonesia, we blend the island's serene natural beauty and rich local culture with our signature <span class="highlight-text">Satu Nusa Holistic Therapy®</span></p>
-            <a href="#services" class="cta-button">Start Your Recovery Journey</a>
+            <h1>${websiteData.hero.title}</h1>
+            <h2>${websiteData.hero.subtitle}</h2>
+            <p>${websiteData.hero.description}</p>
+            <a href="#services" class="cta-button">${websiteData.hero.buttonText}</a>
         </div>
     </section>
 
-    <!-- What Makes Us Different -->
-    <section class="section what-makes-different">
-        <h2 class="section-title">What Makes Us Different?</h2>
-        <div class="content-grid">
-            <div class="content-text">
-                <p>We recognize that each recovery journey is unique. That is why we provide <strong class="highlight-text">Satu Nusa Holistic Therapy®</strong>, a program designed to emphasize mindset and behavioral transformation in order to achieve the <strong class="highlight-text">Eight Pillars of Holistic Well-being</strong>, addressing both addiction and mental health challenges.</p>
-                <br>
-                <p>Our comprehensive approach combines traditional therapeutic methods with innovative holistic practices, set against the backdrop of Bali's healing natural environment. We understand that true recovery encompasses mind, body, and spirit.</p>
-            </div>
-            <div class="image-placeholder">
-                <i class="fas fa-leaf" style="font-size: 4rem; opacity: 0.7;"></i>
-                <div style="position: absolute; bottom: 20px; font-size: 1rem;">Holistic Healing Environment</div>
-            </div>
+    <section id="about" class="section">
+        <h2 class="section-title">${websiteData.about.title}</h2>
+        <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+            <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem;">${websiteData.about.description}</p>
+            <p style="font-size: 1.1rem; line-height: 1.8;">${websiteData.about.description2}</p>
         </div>
     </section>
 
-    <!-- Services -->
-    <section id="services" class="section services">
-        <h2 class="section-title">Services And Treatment Modality</h2>
-        <p style="text-align: center; font-size: 1.1rem; color: #666; margin-bottom: 3rem;">Our services for you are Mental Health, and Addiction Treatment combined with Holistic Therapy as our treatment modality.</p>
-        
+    <section id="services" class="section" style="background: #f8f9fa;">
+        <h2 class="section-title">Our Services</h2>
         <div class="services-grid">
+            ${websiteData.services.map(service => `
             <div class="service-card">
                 <div class="service-icon">
-                    <i class="fas fa-brain"></i>
+                    <i class="${service.icon}"></i>
                 </div>
-                <h3>Mental Health</h3>
-                <p>Mental health is a state of mental well-being that enables people to cope with the stresses of life, realize their abilities, learn well and work well, and contribute to their community. Our comprehensive mental health programs address anxiety, depression, trauma, and other psychological challenges through evidence-based therapeutic approaches.</p>
+                <h3>${service.title}</h3>
+                <p>${service.description}</p>
             </div>
-
-            <div class="service-card">
-                <div class="service-icon">
-                    <i class="fas fa-heart"></i>
-                </div>
-                <h3>Addiction Treatment</h3>
-                <p>Addiction treatment is a critical and multifaceted process aimed at helping individuals overcome their dependence on substances or behaviors that have become detrimental to their well-being. Our program combines medical supervision, counseling, and holistic approaches to ensure lasting recovery.</p>
-            </div>
-
-            <div class="service-card">
-                <div class="service-icon">
-                    <i class="fas fa-lotus"></i>
-                </div>
-                <h3>Satu Nusa Holistic Therapy®</h3>
-                <p>Satu Nusa Holistic Therapy is a comprehensive rehabilitation approach that integrates traditional therapeutic methods with innovative holistic practices. Our signature program focuses on the Eight Pillars of Holistic Well-being to address the whole person - mind, body, and spirit.</p>
-            </div>
+            `).join('')}
         </div>
     </section>
 
-    <!-- Team Section -->
-    <section id="team" class="team-section">
-        <h2 class="section-title">Meet Our Expert Team</h2>
-        <p style="text-align: center; font-size: 1.1rem; color: #666; margin-bottom: 3rem;">Our dedicated professionals are committed to your healing journey with expertise in holistic therapy and addiction treatment.</p>
-        
-        <div class="team-member">
-            <div class="team-photo">
-                <img src="https://i0.wp.com/satunusarehabilitation.com/wp-content/uploads/2023/05/8-22OCT_BHR_6of31__3_-removebg-preview.png?resize=257%2C330&ssl=1" alt="Kerryn - Hypnotherapist">
+    <section id="team" class="section">
+        <h2 class="section-title">Our Team</h2>
+        <div class="team-grid">
+            ${websiteData.team.map(member => `
+            <div class="team-card">
+                ${member.image ? `<img src="${member.image}" alt="${member.name}">` : '<div style="width: 150px; height: 150px; background: #f0f0f0; border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center;"><i class="fas fa-user" style="font-size: 3rem; color: #ccc;"></i></div>'}
+                <h3>${member.name}</h3>
+                <div class="team-role">${member.role}</div>
+                <p>${member.description}</p>
             </div>
-            <div class="team-info">
-                <h3>Kerryn</h3>
-                <div class="team-role">Hypnotherapist & RTT Practitioner</div>
-                <div class="team-description">
-                    <p>Kerryn has been practicing RTT (Rapid Transformational Therapy) for 6 years and has helped hundreds of people with a wide range of issues. She is exceptionally skilled at what she does and has been trained by the best in the field.</p>
-                    
-                    <p>Her purpose and passion in life is helping and healing people. She feels totally blessed to have found this amazing gift called Rapid Transformational Therapy and to have the opportunity to make a real difference in people's lives.</p>
-                    
-                    <p>With a rich background in life coaching, education, and spiritual teachings, Kerryn discovered Marisa Peer's Rapid Transformational Therapy in 2016. She traveled to London for training and now combines life coaching and spiritual learnings with hypnotherapy to help people from all walks of life.</p>
-                    
-                    <p>Based in Bali for 4 years, Kerryn conducts spirituality, coaching, and RTT sessions, as well as offering 7-day Self Healing Retreats to help people learn self-healing techniques and put themselves first.</p>
-                </div>
-            </div>
+            `).join('')}
         </div>
     </section>
 
-    <!-- Gallery Section -->
-    <section id="gallery" class="section gallery">
-        <h2 class="section-title">Our Facilities & Environment</h2>
-        <p style="text-align: center; font-size: 1.1rem; color: #666; margin-bottom: 3rem;">Experience our serene healing environment on Serangan Island, Bali, where nature and therapy come together for your recovery journey.</p>
-        
+    ${websiteData.gallery.length > 0 ? `
+    <section id="gallery" class="section" style="background: #f8f9fa;">
+        <h2 class="section-title">Gallery</h2>
         <div class="gallery-grid">
+            ${websiteData.gallery.map(item => `
             <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Rehabilitation Center">
-                <div class="gallery-overlay">
-                    <h4>Rehabilitation Center</h4>
-                    <p>Modern facilities designed for comfort and healing</p>
-                </div>
+                <img src="${item.src}" alt="${item.title}">
             </div>
-            
-            <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Meditation Space">
-                <div class="gallery-overlay">
-                    <h4>Meditation & Mindfulness</h4>
-                    <p>Peaceful spaces for reflection and inner healing</p>
-                </div>
-            </div>
-            
-            <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Group Therapy">
-                <div class="gallery-overlay">
-                    <h4>Group Therapy Sessions</h4>
-                    <p>Supportive community healing environment</p>
-                </div>
-            </div>
-            
-            <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Natural Environment">
-                <div class="gallery-overlay">
-                    <h4>Bali Natural Beauty</h4>
-                    <p>Surrounded by Bali's healing natural environment</p>
-                </div>
-            </div>
-            
-            <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Recreation Activities">
-                <div class="gallery-overlay">
-                    <h4>Recreation Therapy</h4>
-                    <p>Outdoor activities and therapeutic recreation</p>
-                </div>
-            </div>
-            
-            <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Wellness Center">
-                <div class="gallery-overlay">
-                    <h4>Holistic Wellness</h4>
-                    <p>Comprehensive wellness and recovery programs</p>
-                </div>
-            </div>
+            `).join('')}
         </div>
     </section>
+    ` : ''}
 
-    <!-- Recreation Therapy -->
-    <section id="therapy" class="section recreation-therapy">
-        <h2 class="section-title">Recreational Therapy</h2>
-        <div class="content-text" style="text-align: center; margin-bottom: 3rem;">
-            <p>Recreational therapy is a type of therapy that uses leisure and leisure activities to promote physical, mental and emotional well-being. It can be a useful addition to the rehabilitation process for clients currently undergoing rehabilitation.</p>
-        </div>
-
-        <h3 style="color: #2c5f41; font-size: 1.8rem; margin-bottom: 2rem; text-align: center;">Activity Programs</h3>
-        <div class="activities-grid">
-            <div class="activity-item">
-                <h4><i class="fas fa-mountain" style="color: #4CAF50; margin-right: 8px;"></i>Outside Activities</h4>
-                <p>Running, hiking, glamping, martial arts, water sports, air sports, equestrian sports, archery, target shooting, Balinese cultural performances, nature exploration, fishing, ATV riding, and stargazing sessions.</p>
-            </div>
-            <div class="activity-item">
-                <h4><i class="fas fa-palette" style="color: #4CAF50; margin-right: 8px;"></i>Art Activities</h4>
-                <p>Painting, sculpting, silver ring making, Balinese handicrafts, traditional woven fabric creation, and Balinese mask making - all tailored to individual preferences and therapeutic needs.</p>
-            </div>
-        </div>
-
-        <h3 style="color: #2c5f41; font-size: 1.8rem; margin: 4rem 0 2rem; text-align: center;">The Benefits of Recreational Therapy</h3>
-        <div class="benefits-grid">
-            <div class="benefit-card">
-                <h4><i class="fas fa-heartbeat" style="color: #4CAF50; margin-right: 8px;"></i>Improving Physical and Mental Well-being</h4>
-                <p>Recreational therapy helps improve physical fitness and mental health, reducing stress, anxiety, and depression while increasing feelings of joy and happiness.</p>
-            </div>
-            <div class="benefit-card">
-                <h4><i class="fas fa-users" style="color: #4CAF50; margin-right: 8px;"></i>Building Social Support</h4>
-                <p>Group activities foster social connections and build a sense of community among individuals in rehabilitation, creating positive relationships with others who share similar experiences.</p>
-            </div>
-            <div class="benefit-card">
-                <h4><i class="fas fa-smile" style="color: #4CAF50; margin-right: 8px;"></i>Positive Emotions</h4>
-                <p>Provides alternative and healthier ways to deal with emotions through sports, arts, music, and outdoor activities, helping process feelings in positive and constructive ways.</p>
-            </div>
-            <div class="benefit-card">
-                <h4><i class="fas fa-trophy" style="color: #4CAF50; margin-right: 8px;"></i>Increase Self-Esteem and Confidence</h4>
-                <p>Participation helps individuals regain a sense of accomplishment, set and achieve goals, experience success, and learn new skills, contributing to positive self-image.</p>
-            </div>
-            <div class="benefit-card">
-                <h4><i class="fas fa-shield-alt" style="color: #4CAF50; margin-right: 8px;"></i>Reducing Desire and Risk of Recurrence</h4>
-                <p>Offers fun and satisfying alternatives without substance use, helping reduce cravings and recurrence risk by providing pleasure and satisfaction through healthy activities.</p>
-            </div>
-            <div class="benefit-card">
-                <h4><i class="fas fa-brain" style="color: #4CAF50; margin-right: 8px;"></i>Improve Cognitive Function</h4>
-                <p>Activities improve cognitive functions such as memory, problem-solving, and decision-making through mentally stimulating exercises that restore abilities impaired by substance use.</p>
-            </div>
-            <div class="benefit-card">
-                <h4><i class="fas fa-leaf" style="color: #4CAF50; margin-right: 8px;"></i>Teach Stress Management</h4>
-                <p>Teaches healthier ways to deal with stress, boredom, and triggers, helping develop long-term coping strategies that enhance sobriety and overall well-being.</p>
-            </div>
-            <div class="benefit-card">
-                <h4><i class="fas fa-compass" style="color: #4CAF50; margin-right: 8px;"></i>Providing Purpose</h4>
-                <p>Gives clients a sense of purpose and structure, helping establish daily routines, set goals, and feel accomplishment, cultivating motivation and positive mindset for recovery.</p>
-            </div>
-            <div class="benefit-card">
-                <h4><i class="fas fa-meditation" style="color: #4CAF50; margin-right: 8px;"></i>Increase Mindfulness and Self Awareness</h4>
-                <p>Focuses on being present and cultivating mindfulness, helping individuals become more self-aware, understand triggers and patterns, and develop healthier thinking and behavior.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
     <footer id="contact">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Satu Nusa Holistic Therapy®</h3>
-                <p>Mental Health and Addiction Treatment</p>
-                <p>Serangan Island, South Denpasar, Bali, Indonesia</p>
-            </div>
-            <div class="footer-section">
-                <h3>Our Services</h3>
-                <p><a href="#services">Mental Health Treatment</a></p>
-                <p><a href="#services">Addiction Recovery</a></p>
-                <p><a href="#therapy">Recreational Therapy</a></p>
-                <p><a href="#services">Holistic Wellness Programs</a></p>
-            </div>
-            <div class="footer-section">
-                <h3>Contact Information</h3>
-                <p>For more information, please contact us and register now.</p>
-                <p><i class="fas fa-phone"></i> Contact us for consultation</p>
-                <p><i class="fas fa-envelope"></i> Get in touch today</p>
-            </div>
+        <h2 style="margin-bottom: 2rem;">Contact Us</h2>
+        <div style="max-width: 600px; margin: 0 auto;">
+            ${websiteData.contact.address ? `<p><i class="fas fa-map-marker-alt"></i> ${websiteData.contact.address}</p>` : ''}
+            ${websiteData.contact.phone ? `<p><i class="fas fa-phone"></i> ${websiteData.contact.phone}</p>` : ''}
+            ${websiteData.contact.email ? `<p><i class="fas fa-envelope"></i> ${websiteData.contact.email}</p>` : ''}
+            ${websiteData.contact.whatsapp ? `<p><i class="fab fa-whatsapp"></i> ${websiteData.contact.whatsapp}</p>` : ''}
+            ${websiteData.contact.website ? `<p><i class="fas fa-globe"></i> ${websiteData.contact.website}</p>` : ''}
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 Satu Nusa Holistic Therapy®. All rights reserved. | Mental Health and Addiction Treatment Rehab Bali</p>
+        <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.2);">
+            <p>&copy; 2025 Satu Nusa Holistic Therapy®. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
-        // Mobile menu toggle
-        function toggleMenu() {
-            const navLinks = document.querySelector('.nav-links');
-            const menuToggle = document.querySelector('.menu-toggle');
-            navLinks.classList.toggle('active');
-            menuToggle.classList.toggle('active');
-        }
-
-        // Smooth scrolling for navigation links
+        // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-                
-                // Close mobile menu after clicking
-                const navLinks = document.querySelector('.nav-links');
-                navLinks.classList.remove('active');
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
             });
         });
 
@@ -767,248 +1719,78 @@
             const header = document.querySelector('header');
             if (window.scrollY > 100) {
                 header.style.background = 'rgba(255, 255, 255, 0.98)';
-                header.style.boxShadow = '0 2px 25px rgba(0,0,0,0.15)';
             } else {
                 header.style.background = 'rgba(255, 255, 255, 0.95)';
-                header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
             }
         });
-
-        // Intersection Observer for animation on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        // Observe elements for animation
-        document.querySelectorAll('.service-card, .benefit-card, .activity-item').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(el);
-        });
-
-        // Add floating animation to hero elements
-        function addFloatingAnimation() {
-            const heroContent = document.querySelector('.hero-content');
-            if (heroContent) {
-                heroContent.style.animation = 'fadeInUp 1s ease, float 6s ease-in-out infinite 1s';
-            }
+    </script>
+</body>
+</html>`;
         }
 
-        // Add floating keyframe animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes float {
-                0%, 100% { transform: translateY(0px); }
-                50% { transform: translateY(-10px); }
-            }
-            
-            .service-card:nth-child(2) {
-                animation-delay: 0.1s;
-            }
-            
-            .service-card:nth-child(3) {
-                animation-delay: 0.2s;
-            }
-            
-            .benefit-card:nth-child(even) {
-                animation-delay: 0.1s;
-            }
-            
-            .activity-item:nth-child(2) {
-                animation-delay: 0.15s;
-            }
-        `;
-        document.head.appendChild(style);
+        function showHelp() {
+            alert(\`Panduan Penggunaan CMS Satu Nusa:
 
-        // Initialize floating animation
-        setTimeout(addFloatingAnimation, 100);
+1. DASHBOARD: Lihat ringkasan dan akses cepat ke semua fitur
 
-        // Add click effect to CTA button
-        document.querySelector('.cta-button').addEventListener('click', function(e) {
-            const ripple = document.createElement('span');
-            ripple.style.cssText = `
-                position: absolute;
-                border-radius: 50%;
-                background: rgba(255,255,255,0.6);
-                transform: scale(0);
-                animation: ripple 0.6s linear;
-                left: ${e.offsetX - 10}px;
-                top: ${e.offsetY - 10}px;
-                width: 20px;
-                height: 20px;
-                pointer-events: none;
-            `;
-            
-            this.style.position = 'relative';
-            this.style.overflow = 'hidden';
-            this.appendChild(ripple);
-            
-            setTimeout(() => {
-                ripple.remove();
-            }, 600);
-        });
+2. HERO SECTION: Edit judul utama, deskripsi, dan background website
 
-        // Add ripple animation keyframes
-        const rippleStyle = document.createElement('style');
-        rippleStyle.textContent = `
-            @keyframes ripple {
-                to {
-                    transform: scale(4);
-                    opacity: 0;
+3. ABOUT US: Kelola informasi tentang Satu Nusa dan keunikan layanan
+
+4. SERVICES: Tambah, edit, atau hapus layanan yang ditawarkan
+
+5. TEAM: Kelola profil tim dan staff dengan foto dan deskripsi
+
+6. GALLERY: Upload dan kelola foto-foto fasilitas dengan drag & drop
+
+7. CONTACT: Edit informasi kontak, alamat, dan media sosial
+
+8. SETTINGS: Atur judul website, logo, dan warna tema
+
+TIPS:
+- Gunakan drag & drop untuk upload gambar
+- Preview website sebelum export
+- Export sebagai HTML file untuk deployment
+- Semua perubahan disimpan otomatis
+
+Untuk bantuan lebih lanjut, hubungi tim support.\`);
+        }
+
+        // Auto-save functionality
+        setInterval(() => {
+            localStorage.setItem('satunusa_cms_data', JSON.stringify(websiteData));
+        }, 30000); // Auto-save every 30 seconds
+
+        // Load saved data on page load
+        window.addEventListener('load', () => {
+            const savedData = localStorage.getItem('satunusa_cms_data');
+            if (savedData) {
+                const confirmed = confirm('Data tersimpan ditemukan. Apakah Anda ingin memuat data terakhir?');
+                if (confirmed) {
+                    websiteData = JSON.parse(savedData);
+                    
+                    // Update form fields
+                    document.getElementById('hero-title').value = websiteData.hero.title;
+                    document.getElementById('hero-subtitle').value = websiteData.hero.subtitle;
+                    document.getElementById('hero-description').value = websiteData.hero.description;
+                    document.getElementById('hero-button-text').value = websiteData.hero.buttonText;
+                    document.getElementById('about-title').value = websiteData.about.title;
+                    document.getElementById('about-description').value = websiteData.about.description;
+                    document.getElementById('about-description2').value = websiteData.about.description2;
+                    document.getElementById('contact-address').value = websiteData.contact.address;
+                    document.getElementById('site-title').value = websiteData.settings.siteTitle;
+                    document.getElementById('site-description').value = websiteData.settings.siteDescription;
+                    
+                    // Refresh dynamic content
+                    initializeServices();
+                    initializeTeam();
+                    refreshGalleryPreview();
+                    updateHeroPreview();
+                    
+                    showSuccessMessage('Data berhasil dimuat!');
                 }
             }
-        `;
-        document.head.appendChild(rippleStyle);
-
-        // Parallax effect for hero section
-        window.addEventListener('scroll', function() {
-            const scrolled = window.pageYOffset;
-            const parallax = document.querySelector('.hero');
-            const speed = scrolled * 0.5;
-            
-            if (parallax) {
-                parallax.style.backgroundPosition = `center ${speed}px`;
-            }
         });
-
-        // Add loading animation
-        window.addEventListener('load', function() {
-            document.body.style.opacity = '0';
-            document.body.style.transition = 'opacity 0.5s ease';
-            
-            setTimeout(() => {
-                document.body.style.opacity = '1';
-            }, 100);
-        });
-
-        // Add hover effect to navigation links
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-2px)';
-                this.style.transition = 'transform 0.3s ease';
-            });
-            
-            link.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0)';
-            });
-        });
-
-        // Add scroll progress indicator
-        function addScrollProgress() {
-            const progressBar = document.createElement('div');
-            progressBar.style.cssText = `
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 0%;
-                height: 3px;
-                background: linear-gradient(45deg, #4CAF50, #66BB6A);
-                z-index: 9999;
-                transition: width 0.1s ease;
-            `;
-            document.body.appendChild(progressBar);
-            
-            window.addEventListener('scroll', function() {
-                const scrollTop = window.pageYOffset;
-                const docHeight = document.body.scrollHeight - window.innerHeight;
-                const scrollPercent = (scrollTop / docHeight) * 100;
-                progressBar.style.width = scrollPercent + '%';
-            });
-        }
-
-        // Initialize scroll progress
-        addScrollProgress();
-
-        // Add contact form functionality (if needed in the future)
-        function initializeContactForm() {
-            // Placeholder for future contact form implementation
-            console.log('Contact form ready for implementation');
-        }
-
-        // Initialize all features
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeContactForm();
-            
-            // Add entrance animations to sections
-            const sections = document.querySelectorAll('.section');
-            sections.forEach((section, index) => {
-                section.style.opacity = '0';
-                section.style.transform = 'translateY(50px)';
-                section.style.transition = `opacity 0.8s ease ${index * 0.1}s, transform 0.8s ease ${index * 0.1}s`;
-                
-                const sectionObserver = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.style.opacity = '1';
-                            entry.target.style.transform = 'translateY(0)';
-                        }
-                    });
-                }, { threshold: 0.1 });
-                
-                sectionObserver.observe(section);
-            });
-        });
-
-        // Add dynamic background colors based on scroll position
-        function updateBackgroundColors() {
-            const scrollPercent = window.pageYOffset / (document.body.scrollHeight - window.innerHeight);
-            const hue = 120 + (scrollPercent * 60); // From green to teal
-            
-            document.documentElement.style.setProperty('--dynamic-color', `hsl(${hue}, 65%, 45%)`);
-        }
-
-        window.addEventListener('scroll', updateBackgroundColors);
-
-        // Add custom cursor effect for interactive elements
-        function addCustomCursor() {
-            const cursor = document.createElement('div');
-            cursor.style.cssText = `
-                position: fixed;
-                width: 20px;
-                height: 20px;
-                border: 2px solid #4CAF50;
-                border-radius: 50%;
-                pointer-events: none;
-                z-index: 9999;
-                transition: transform 0.1s ease;
-                opacity: 0;
-            `;
-            document.body.appendChild(cursor);
-            
-            document.addEventListener('mousemove', (e) => {
-                cursor.style.left = e.clientX - 10 + 'px';
-                cursor.style.top = e.clientY - 10 + 'px';
-                cursor.style.opacity = '1';
-            });
-            
-            document.querySelectorAll('a, button, .service-card, .benefit-card').forEach(el => {
-                el.addEventListener('mouseenter', () => {
-                    cursor.style.transform = 'scale(1.5)';
-                    cursor.style.backgroundColor = 'rgba(76, 175, 80, 0.1)';
-                });
-                
-                el.addEventListener('mouseleave', () => {
-                    cursor.style.transform = 'scale(1)';
-                    cursor.style.backgroundColor = 'transparent';
-                });
-            });
-        }
-
-        // Initialize custom cursor on desktop
-        if (window.innerWidth > 768) {
-            addCustomCursor();
-        }
     </script>
 </body>
 </html>
